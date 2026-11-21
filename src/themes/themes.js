@@ -1,7 +1,13 @@
 // テーマ定義 — 全プラットフォーム共通の単一ソース。
 // 画風は統一する: クリアな線、色数を絞る、余白(引き算)を大事に。
-// wallpaper はデザイン生成後に assets/wallpapers/<id>.jpg を置く。
+// wallpaper は assets/wallpapers/<id>.webp。
 // 全テーマ無料 (price: "free")。
+//
+// 配色哲学 (詳細は THEME_SPEC.md「ブランドとしての設計原則」):
+// - 彩度は原則として中〜低に抑え、自然素材由来の色で組む。原色は使わない。
+// - アクセントは1テーマ1色。accent2 は同系色の補助トーンに限定する。
+// - onAccent は accent を塗った面に載せる文字色。
+// - 本文テキストは背景に対し 7:1 を目標、muted も 4.5:1 (WCAG AA) 以上を死守する。
 const THEMES = [
   {
     id: "spider-forest",
@@ -10,9 +16,9 @@ const THEMES = [
     description: "苔むした暗い森、糸に光る雫、静かな蜘蛛。",
     dark: true,
     colors: {
-      bg: "#0d2018", surface: "#143327", surfaceAlt: "#1b4231",
-      text: "#e9f2e4", muted: "#9db8a2", accent: "#b7d977", accent2: "#5f8f6a",
-      border: "#26503c"
+      bg: "#0f1a13", surface: "#17251c", surfaceAlt: "#1f3025",
+      text: "#e7eee1", muted: "#a3b8a5", accent: "#b0c584", accent2: "#61755f",
+      border: "#2b3f31", onAccent: "#1a2013"
     },
     wallpaper: "assets/wallpapers/spider-forest.webp",
     motif: "spider-web"
@@ -24,9 +30,9 @@ const THEMES = [
     description: "夕日の木漏れ日、穏やかな鹿、暖色の森。",
     dark: true,
     colors: {
-      bg: "#2a1a0e", surface: "#3d2716", surfaceAlt: "#4f331d",
-      text: "#f7ead8", muted: "#c9a87f", accent: "#f2a65a", accent2: "#a9713f",
-      border: "#5d3f24"
+      bg: "#1c120a", surface: "#291a0f", surfaceAlt: "#362413",
+      text: "#f4ead6", muted: "#c6a87f", accent: "#d99e57", accent2: "#82603a",
+      border: "#42301d", onAccent: "#241708"
     },
     wallpaper: "assets/wallpapers/deer-warm-forest.webp",
     motif: "deer"
@@ -38,9 +44,9 @@ const THEMES = [
     description: "深海の静けさ、ゆっくり泳ぐクジラ、泡と光。",
     dark: true,
     colors: {
-      bg: "#06182e", surface: "#0b2745", surfaceAlt: "#10355c",
-      text: "#e3f0fa", muted: "#8fb0cc", accent: "#57c7d4", accent2: "#2b6ea6",
-      border: "#17456e"
+      bg: "#07131f", surface: "#0d1f31", surfaceAlt: "#132c44",
+      text: "#e1edf5", muted: "#95b0c4", accent: "#71b5c1", accent2: "#40657f",
+      border: "#1c3850", onAccent: "#0a1a22"
     },
     wallpaper: "assets/wallpapers/whale-deep-sea.webp",
     motif: "whale"
@@ -52,9 +58,9 @@ const THEMES = [
     description: "暗い空、大きな月、二人だけの静かな宇宙。",
     dark: true,
     colors: {
-      bg: "#070a18", surface: "#10142b", surfaceAlt: "#181e3d",
-      text: "#eceef7", muted: "#9aa3c7", accent: "#f5d97e", accent2: "#7e8fc9",
-      border: "#232a52"
+      bg: "#090c18", surface: "#11152a", surfaceAlt: "#181d38",
+      text: "#eaecf4", muted: "#a3aac2", accent: "#dec887", accent2: "#6e7699",
+      border: "#252b47", onAccent: "#1d1a0e"
     },
     wallpaper: "assets/wallpapers/astronauts-moon.webp",
     motif: "moon"
@@ -66,9 +72,9 @@ const THEMES = [
     description: "静かな都会、カフェと本と夕方、大人可愛い日常。",
     dark: false,
     colors: {
-      bg: "#f3efe9", surface: "#ffffff", surfaceAlt: "#eae3d8",
-      text: "#33302c", muted: "#8d857a", accent: "#c98a94", accent2: "#7d7466",
-      border: "#ddd3c4"
+      bg: "#f2ede5", surface: "#fcfaf6", surfaceAlt: "#e8dfd1",
+      text: "#35322b", muted: "#71634e", accent: "#a0655a", accent2: "#8a7c68",
+      border: "#ddd1bd", onAccent: "#ffffff"
     },
     wallpaper: "assets/wallpapers/city-girl.webp",
     motif: "city"
@@ -80,9 +86,9 @@ const THEMES = [
     description: "レトロゲームの光、ネオンの部屋、夜更かしの相棒。",
     dark: true,
     colors: {
-      bg: "#12081f", surface: "#1e0f33", surfaceAlt: "#2a1747",
-      text: "#f6ecff", muted: "#b49ad9", accent: "#ff5da2", accent2: "#41e6d9",
-      border: "#3a2260"
+      bg: "#120a1f", surface: "#1c1129", surfaceAlt: "#281839",
+      text: "#f1eaf8", muted: "#b6a5cf", accent: "#e2609f", accent2: "#8b76c4",
+      border: "#38254f", onAccent: "#2b0e1d"
     },
     wallpaper: "assets/wallpapers/gamer-neon.webp",
     motif: "neon"
@@ -94,9 +100,9 @@ const THEMES = [
     description: "砂紋、苔、灯籠、温かな和の庭園。",
     dark: false,
     colors: {
-      bg: "#f5efe2", surface: "#fffaf0", surfaceAlt: "#ece1c9",
-      text: "#38332a", muted: "#8f8672", accent: "#b5522f", accent2: "#5f7355",
-      border: "#ded0b2"
+      bg: "#f4efe2", surface: "#fbf7ec", surfaceAlt: "#e9dfc6",
+      text: "#37332a", muted: "#766c52", accent: "#a9502c", accent2: "#68764f",
+      border: "#d8c9a4", onAccent: "#ffffff"
     },
     wallpaper: "assets/wallpapers/japanese-garden.webp",
     motif: "garden"
@@ -108,9 +114,9 @@ const THEMES = [
     description: "mikapijazo風の大胆な配色。ビビッドでポップな世界。",
     dark: false,
     colors: {
-      bg: "#fdfdf8", surface: "#ffffff", surfaceAlt: "#ffeef7",
-      text: "#1d1d1d", muted: "#6d6d6d", accent: "#ff2e88", accent2: "#00b7eb",
-      border: "#ffd400"
+      bg: "#faf9f3", surface: "#ffffff", surfaceAlt: "#efede3",
+      text: "#22221f", muted: "#6d6d64", accent: "#d53c31", accent2: "#9c3226",
+      border: "#e2dcc9", onAccent: "#ffffff"
     },
     wallpaper: "assets/wallpapers/bold-colors.webp",
     motif: "bold"
@@ -122,9 +128,9 @@ const THEMES = [
     description: "開くたびに迎えてくれる、あなただけの彼女。",
     dark: false,
     colors: {
-      bg: "#fdf1f3", surface: "#ffffff", surfaceAlt: "#fbe3e8",
-      text: "#3d2c30", muted: "#a58a90", accent: "#e86a8a", accent2: "#b58ce8",
-      border: "#f3ccd5"
+      bg: "#faf3ef", surface: "#fffcf9", surfaceAlt: "#f2e3dc",
+      text: "#3f2f2c", muted: "#826552", accent: "#ad5a6c", accent2: "#9a7f72",
+      border: "#e7d0c6", onAccent: "#ffffff"
     },
     wallpaper: "assets/wallpapers/girlfriend.webp",
     motif: "heart"

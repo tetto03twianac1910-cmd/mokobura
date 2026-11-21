@@ -54,9 +54,19 @@ function applyTheme(theme) {
   r.setProperty("--accent", c.accent);
   r.setProperty("--accent2", c.accent2);
   r.setProperty("--border", c.border);
-  $("#theme-name").textContent = "🎀 " + theme.name;
+  r.setProperty("--on-accent", c.onAccent);
+  $("#theme-name").textContent = theme.name;
   $("#theme-desc").textContent = theme.description;
-  $("#wallpaper").src = "../themes/" + theme.wallpaper;
+  // 壁紙は読み込み完了後にクロスフェードで差し替える (切り替えを滑らかに)
+  const wp = $("#wallpaper");
+  const src = "../themes/" + theme.wallpaper;
+  if (wp.getAttribute("src") !== src) {
+    const pre = new Image();
+    pre.onload = () => { wp.src = src; wp.style.opacity = "1"; };
+    pre.onerror = () => { wp.src = src; wp.style.opacity = "1"; };
+    wp.style.opacity = "0";
+    pre.src = src;
+  }
   $("#nt-theme-line").textContent = "いまのテーマ: " + theme.name + " — " + theme.description;
   currentThemeId = theme.id;
   document.querySelectorAll(".theme-card").forEach((el) =>
