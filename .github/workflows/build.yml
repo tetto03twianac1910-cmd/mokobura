@@ -20,7 +20,13 @@ jobs:
           node-version: 22
       - run: npm ci || npm install
       - name: Build (electron-builder)
-        run: npx electron-builder --publish never
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "macOS" ]; then
+            npx electron-builder --mac dmg zip --arm64 --x64 --publish never
+          else
+            npx electron-builder --publish never
+          fi
         env:
           # Windows 署名 (OV証明書を Base64 で secrets に入れた場合のみ)
           CSC_LINK: ${{ secrets.CSC_LINK }}
