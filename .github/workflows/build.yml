@@ -1,0 +1,41 @@
+name: build
+
+# 手動実行 (workflow_dispatch) か v* タグで、Win/Mac/Linux を自動ビルドする。
+# 署名は secrets を入れたときだけ有効になる (未設定なら署名なしビルド)。
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [windows-latest, macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci || npm install
+      - name: Build (electron-builder)
+        run: npx electron-builder --publish never
+        env:
+          # Windows 署名 (OV証明書を Base64 で secrets に入れた場合のみ)
+          CSC_LINK: ${{ secrets.CSC_LINK }}
+          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
+          # Mac 署名・公証 (Apple Developer 登録後)
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_APP_SPECIFIC_PASSWORD: ${{ secrets.APPLE_APP_SPECIFIC_PASSWORD }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mokobura-${{ matrix.os }}
+          path: |
+            dist/*.exe
+            dist/*.dmg
+            dist/*.zip
+            dist/*.AppImage
+            dist/*.tar.gz
+          if-no-files-found: ignore

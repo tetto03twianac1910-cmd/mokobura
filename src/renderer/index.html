@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>もこブラ</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header id="chrome">
+    <nav id="tabbar">
+      <div id="tabs"></div>
+      <button id="newtab" title="新しいタブ">＋</button>
+    </nav>
+    <div id="navbar">
+      <button id="back" title="戻る">‹</button>
+      <button id="forward" title="進む">›</button>
+      <button id="reload" title="再読み込み">⟳</button>
+      <input id="address" type="text" placeholder="検索、またはURLを入力" spellcheck="false">
+      <button id="star" title="ブックマーク">☆</button>
+      <button id="library-open" title="ブックマークと履歴">📚</button>
+      <button id="closet-open" title="着せ替え">🎀 着せ替え</button>
+    </div>
+    <div id="themebar">
+      <span id="theme-name"></span>
+      <span id="theme-desc"></span>
+    </div>
+  </header>
+
+  <main id="newtab">
+    <img id="wallpaper" alt="">
+    <div class="nt-center">
+      <h1 id="nt-greeting">こんにちは</h1>
+      <p id="nt-theme-line"></p>
+      <div class="nt-search">
+        <input id="nt-query" type="text" placeholder="検索、またはURLを入力" spellcheck="false">
+        <button id="nt-go">検索</button>
+      </div>
+      <div id="nt-shortcuts">
+        <button data-url="https://www.youtube.com">YouTube</button>
+        <button data-url="https://x.com">X</button>
+        <button data-url="https://ja.wikipedia.org">Wikipedia</button>
+        <button data-url="https://www.amazon.co.jp">Amazon</button>
+        <button data-url="https://github.com">GitHub</button>
+      </div>
+      <p class="nt-hint">🎀 着せ替えボタンから、テーマと壁紙を変えられます</p>
+    </div>
+  </main>
+
+  <aside id="library" hidden>
+    <div class="closet-head">
+      <h2>ブックマーク</h2>
+      <button id="library-close">×</button>
+    </div>
+    <div id="bookmark-list" class="lib-list"></div>
+    <div class="closet-head" style="margin-top:18px">
+      <h2>履歴</h2>
+      <button id="history-clear">消去</button>
+    </div>
+    <div id="history-list" class="lib-list"></div>
+  </aside>
+
+  <aside id="closet" hidden>
+    <div class="closet-head">
+      <h2>テーマクローゼット</h2>
+      <span class="free-note">全テーマ無料</span>
+      <button id="closet-close">×</button>
+    </div>
+    <div id="theme-grid"></div>
+  </aside>
+
+  <script src="../themes/themes.js"></script>
+  <script src="renderer.js"></script>
+</body>
+</html>
