@@ -4,180 +4,244 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>もこブラ（仮名）| 着せ替えできる可愛いブラウザ — PC版・完全無料</title>
-<meta name="description" content="毎日開くブラウザを、好きな世界に着せ替えよう。9つのテーマ全て無料。PC版、広告はアプリ内には入りません。">
+<meta name="description" content="毎日開くブラウザを、お気に入りの世界に着せ替えよ♡ テーマは9種類、ぜんぶ無料。キラキラ可愛いPC専用ブラウザです。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="もこブラ（仮名）| 着せ替えできる可愛いブラウザ">
-<meta property="og:description" content="毎日開くブラウザを、好きな世界に着せ替えよう。テーマは9種類、ぜんぶ無料。PC版・完全無料の着せ替えブラウザです。">
+<meta property="og:description" content="毎日開くブラウザを、お気に入りの世界に着せ替えよ♡ テーマは9種類、ぜんぶ無料。PC版・完全無料の着せ替えブラウザです。">
 <meta property="og:image" content="https://tetto03twianac1910-cmd.github.io/mokobura/assets/themes/deer-warm-forest.webp">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="もこブラ（仮名）| 着せ替えできる可愛いブラウザ">
-<meta name="twitter:description" content="毎日開くブラウザを、好きな世界に着せ替えよう。テーマは9種類、ぜんぶ無料。">
+<meta name="twitter:description" content="毎日開くブラウザを、お気に入りの世界に着せ替えよ♡ テーマは9種類、ぜんぶ無料。">
 <meta name="twitter:image" content="https://tetto03twianac1910-cmd.github.io/mokobura/assets/themes/deer-warm-forest.webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500&family=Shippori+Mincho:wght@500;600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#f7f3ec;
-    --paper-2:#efe9dd;
-    --ink:#26221c;
-    --ink-soft:#6f695c;
-    --ink-faint:#9a937f;
-    --line:#d8d1bf;
-    --line-dark:#b9b09a;
-    --accent:#4c5844;
+    --cream:#fff9f4;
+    --white:#ffffff;
+    --pink:#ff8fb8;
+    --pink-deep:#ef6aa5;
+    --pink-soft:#ffe4ef;
+    --lav:#b7a6f8;
+    --lav-soft:#efeaff;
+    --mint:#63dcbb;
+    --mint-soft:#e2faf1;
+    --sky:#8fd0ff;
+    --sky-soft:#e8f6ff;
+    --butter:#ffd98a;
+    --ink:#59434e;
+    --ink-soft:#a58a96;
+    --shadow-pink:0 12px 32px rgba(255,143,184,.20);
+    --shadow-soft:0 8px 24px rgba(183,166,248,.14);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif;
-    font-weight:400;
-    margin:0; background:var(--paper); color:var(--ink);
-    line-height:1.9; letter-spacing:.03em; font-size:15px;
+    font-family:"M PLUS Rounded 1c","Hiragino Maru Gothic ProN","Hiragino Sans",sans-serif;
+    font-weight:500;
+    margin:0; color:var(--ink);
+    background-color:var(--cream);
+    background-image:radial-gradient(rgba(255,143,184,.10) 2.2px, transparent 2.6px);
+    background-size:26px 26px;
+    line-height:1.85; letter-spacing:.02em; font-size:15px;
     -webkit-font-smoothing:antialiased;
     text-rendering:optimizeLegibility;
   }
-  .mincho{
-    font-family:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",serif;
-    font-feature-settings:"palt" 1;
-  }
-  .en{
-    font-family:"Jost","Zen Kaku Gothic New",sans-serif;
-    font-weight:300; letter-spacing:.32em; text-transform:uppercase;
-  }
+  .maru{font-family:"Zen Maru Gothic","M PLUS Rounded 1c",sans-serif}
   img{max-width:100%; display:block}
-  a{color:var(--ink)}
-  ::selection{background:var(--ink); color:var(--paper)}
+  a{color:var(--pink-deep)}
+  ::selection{background:var(--pink); color:#fff}
+
+  /* きらめき装飾 */
+  .spark{
+    position:absolute; color:var(--pink); pointer-events:none;
+    animation:twinkle 2.6s ease-in-out infinite; line-height:1;
+  }
+  .spark.lav{color:var(--lav)}
+  .spark.sky{color:var(--sky)}
+  @keyframes twinkle{
+    0%,100%{transform:scale(.65) rotate(0deg); opacity:.45}
+    50%{transform:scale(1.15) rotate(22deg); opacity:1}
+  }
+  @keyframes floaty{
+    0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}
+    50%{transform:translateY(-7px) rotate(var(--rot,0deg))}
+  }
 
   /* ---------- ナビ ---------- */
   .nav{
     position:sticky; top:0; z-index:50;
-    display:flex; align-items:baseline; justify-content:space-between;
-    padding:16px 28px 14px;
-    background:var(--paper);
-    border-bottom:1px solid var(--ink);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 26px;
+    background:rgba(255,255,255,.82);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-bottom:3px dotted var(--pink-soft);
   }
   .brand{
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    font-weight:700; font-size:20px; letter-spacing:.12em;
+    font-family:"Zen Maru Gothic",sans-serif;
+    font-weight:900; font-size:23px; letter-spacing:.04em;
     text-decoration:none; color:var(--ink);
   }
+  .brand .heart{color:var(--pink)}
   .brand small{
-    font-family:"Jost",sans-serif; font-weight:300; font-size:10px;
-    letter-spacing:.3em; color:var(--ink-soft); margin-left:12px;
+    font-size:10px; font-weight:700; letter-spacing:.24em;
+    color:var(--ink-soft); margin-left:10px;
   }
-  .nav-links{display:flex; gap:28px; font-size:12px; letter-spacing:.14em}
-  .nav-links a{color:var(--ink-soft); text-decoration:none}
-  .nav-links a:hover{color:var(--ink); text-decoration:underline; text-underline-offset:5px}
+  .nav-links{display:flex; gap:6px; font-size:13px; font-weight:700}
+  .nav-links a{
+    color:var(--ink-soft); text-decoration:none;
+    padding:6px 14px; border-radius:999px;
+    transition:background .2s ease, color .2s ease;
+  }
+  .nav-links a:hover{background:var(--pink-soft); color:var(--pink-deep)}
   @media (max-width:640px){ .nav-links{display:none} .brand small{display:none} }
 
   /* ---------- ヒーロー ---------- */
-  .hero{max-width:1080px; margin:0 auto; padding:88px 28px 0}
-  .hero .kicker{
-    font-size:11px; color:var(--accent); margin:0 0 34px;
-    display:flex; align-items:center; gap:16px;
+  .hero{max-width:1040px; margin:0 auto; padding:76px 26px 0; position:relative; text-align:center}
+  .hero .badge{
+    display:inline-block; background:var(--white); color:var(--pink-deep);
+    font-size:12.5px; font-weight:800; letter-spacing:.08em;
+    padding:7px 18px; border-radius:999px; box-shadow:var(--shadow-soft);
+    border:2px solid var(--pink-soft); margin:0 0 26px;
   }
-  .hero .kicker::after{content:""; flex:1; height:1px; background:var(--line-dark)}
   .hero h1{
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    font-weight:600; font-size:clamp(34px,6vw,62px);
-    line-height:1.55; letter-spacing:.04em; margin:0 0 30px;
+    font-family:"Zen Maru Gothic",sans-serif;
+    font-weight:900; font-size:clamp(32px,6vw,58px);
+    line-height:1.5; letter-spacing:.03em; margin:0 0 24px;
+  }
+  .hero h1 .grad{
+    background:linear-gradient(92deg,#ff7eb0 10%,#b7a6f8 55%,#6fc3ff 95%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
   }
   .hero .lead{
-    max-width:620px; color:var(--ink-soft); font-size:15px; line-height:2.1;
-    margin:0 0 26px;
+    max-width:600px; margin:0 auto 30px; color:var(--ink-soft);
+    font-size:15.5px; line-height:2;
   }
   .hero .meta{
-    font-size:12px; letter-spacing:.18em; color:var(--ink);
-    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
-    padding:10px 2px; margin:0 0 44px; max-width:620px;
-    display:flex; flex-wrap:wrap; gap:8px 22px;
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px;
+    margin:0 0 46px; padding:0; list-style:none;
   }
-  .hero .meta span::before{content:"— "; color:var(--ink-faint)}
-  .hero-fig{margin:0}
-  .hero-fig .frame{border:1px solid var(--ink); padding:10px; background:var(--paper)}
-  .hero-fig img{width:100%; aspect-ratio:16/9; object-fit:cover}
+  .hero .meta li{
+    background:var(--white); border-radius:999px; padding:7px 16px;
+    font-size:12.5px; font-weight:700; color:var(--ink);
+    box-shadow:var(--shadow-soft);
+  }
+  .hero .meta li:nth-child(1){background:var(--pink-soft)}
+  .hero .meta li:nth-child(2){background:var(--lav-soft)}
+  .hero .meta li:nth-child(3){background:var(--mint-soft)}
+  .hero .meta li:nth-child(4){background:var(--sky-soft)}
+  .hero-fig{margin:0; position:relative}
+  .hero-fig .frame{
+    background:var(--white); padding:14px; border-radius:32px;
+    box-shadow:var(--shadow-pink);
+  }
+  .hero-fig img{width:100%; aspect-ratio:16/9; object-fit:cover; border-radius:22px}
   .hero-fig figcaption{
-    display:flex; justify-content:space-between; gap:16px;
-    font-size:11px; letter-spacing:.16em; color:var(--ink-soft);
-    padding:12px 2px 0;
+    display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;
+    font-size:12px; font-weight:700; letter-spacing:.06em; color:var(--ink-soft);
+    padding:14px 8px 2px;
   }
-  .hero-fig figcaption .en{font-size:10px}
+  .sticker{
+    position:absolute; z-index:2;
+    font-family:"Zen Maru Gothic",sans-serif; font-weight:900;
+    padding:10px 20px; border-radius:999px; color:#fff;
+    box-shadow:var(--shadow-pink); font-size:15px; letter-spacing:.05em;
+    animation:floaty 3.6s ease-in-out infinite;
+  }
+  .sticker.s1{--rot:-7deg; top:-20px; left:4%; background:linear-gradient(120deg,var(--pink),#ffb3d1)}
+  .sticker.s2{--rot:6deg; bottom:52px; right:3%; background:linear-gradient(120deg,var(--lav),#d3c8ff); animation-delay:1.2s}
+  @media (max-width:640px){ .sticker{font-size:12.5px; padding:8px 15px} }
 
   /* ---------- セクション共通 ---------- */
-  section{max-width:1080px; margin:0 auto; padding:104px 28px 0}
-  .sec-head{margin-bottom:44px}
-  .sec-head .no{
-    font-family:"Jost",sans-serif; font-weight:300; font-size:12px;
-    letter-spacing:.32em; color:var(--accent); text-transform:uppercase;
-    display:flex; align-items:center; gap:16px; margin:0 0 20px;
+  section{max-width:1040px; margin:0 auto; padding:100px 26px 0}
+  .sec-head{text-align:center; margin-bottom:44px; position:relative}
+  .sec-head .kicker{
+    display:inline-block; font-size:11.5px; font-weight:800; letter-spacing:.3em;
+    color:var(--pink-deep); text-transform:uppercase; margin:0 0 14px;
   }
-  .sec-head .no::after{content:""; flex:1; height:1px; background:var(--line)}
   .sec-head h2{
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    font-weight:600; font-size:clamp(24px,3.6vw,34px);
-    line-height:1.6; letter-spacing:.05em; margin:0 0 14px;
+    font-family:"Zen Maru Gothic",sans-serif;
+    font-weight:900; font-size:clamp(25px,4vw,36px);
+    line-height:1.55; letter-spacing:.03em; margin:0 0 14px;
   }
-  .sec-head p{color:var(--ink-soft); margin:0; max-width:600px; line-height:2}
+  .sec-head h2 .sp{color:var(--pink); font-size:.8em; vertical-align:.35em; margin:0 .18em}
+  .sec-head p{color:var(--ink-soft); margin:0 auto; max-width:580px; line-height:1.95}
 
   /* ---------- ダウンロード ---------- */
-  .dl-list{border-top:1px solid var(--ink)}
-  .dl-row-item{
-    display:flex; align-items:center; justify-content:space-between; gap:18px;
-    padding:20px 4px; border-bottom:1px solid var(--line);
-    text-decoration:none; color:var(--ink);
+  .dl-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
+  .dl-card{
+    display:block; text-decoration:none; color:var(--ink);
+    background:var(--white); border-radius:26px; padding:24px 22px 22px;
+    box-shadow:var(--shadow-soft); border:3px solid transparent;
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
   }
-  .dl-row-item:hover{background:var(--paper-2)}
-  .dl-row-item .os{
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    font-size:17px; font-weight:600; letter-spacing:.06em;
+  .dl-card:hover{transform:translateY(-4px); box-shadow:var(--shadow-pink); border-color:var(--pink-soft)}
+  .dl-card .os-ic{
+    width:52px; height:52px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Zen Maru Gothic",sans-serif; font-weight:900; font-size:14px;
+    margin-bottom:14px; color:var(--ink);
   }
-  .dl-row-item .os small{
-    font-family:"Zen Kaku Gothic New",sans-serif; font-weight:400;
-    font-size:12px; color:var(--ink-soft); letter-spacing:.08em; margin-left:14px;
+  .dl-card.c-pink .os-ic{background:var(--pink-soft); color:var(--pink-deep)}
+  .dl-card.c-lav .os-ic{background:var(--lav-soft); color:#8a76e8}
+  .dl-card.c-sky .os-ic{background:var(--sky-soft); color:#3d9be9}
+  .dl-card.c-mint .os-ic{background:var(--mint-soft); color:#1fae87}
+  .dl-card .os{
+    font-family:"Zen Maru Gothic",sans-serif; font-weight:900;
+    font-size:19px; letter-spacing:.03em; display:block; margin-bottom:2px;
   }
-  .dl-row-item .get{
-    font-family:"Jost",sans-serif; font-weight:400; font-size:11px;
-    letter-spacing:.3em; text-transform:uppercase; color:var(--ink);
-    border:1px solid var(--ink); padding:9px 18px 8px; flex:none;
+  .dl-card .os-note{display:block; font-size:12.5px; color:var(--ink-soft); margin-bottom:18px}
+  .dl-card .get{
+    display:inline-block; color:#fff; font-weight:800; font-size:13px; letter-spacing:.06em;
+    padding:10px 22px; border-radius:999px;
+    background:linear-gradient(120deg,var(--pink),#ffb3d1);
+    transition:transform .15s ease;
   }
-  .dl-row-item:hover .get{background:var(--ink); color:var(--paper)}
-  .dl-note{font-size:12px; color:var(--ink-faint); letter-spacing:.1em; margin:16px 0 0}
+  .dl-card:hover .get{transform:scale(1.05)}
+  .dl-note{text-align:center; font-size:12.5px; color:var(--ink-soft); margin:20px 0 0; font-weight:700}
   .warn{
-    margin-top:28px; border:1px solid var(--line-dark); padding:20px 24px;
-    font-size:13px; color:var(--ink-soft); line-height:2; max-width:760px;
+    margin:30px auto 0; background:var(--white);
+    border:3px dashed var(--butter); border-radius:24px;
+    padding:22px 26px; font-size:13.5px; color:var(--ink-soft);
+    line-height:1.95; max-width:780px;
   }
   .warn .warn-title{
-    font-family:"Shippori Mincho",serif; font-weight:700; color:var(--ink);
-    font-size:13px; letter-spacing:.14em; display:block; margin-bottom:6px;
+    font-family:"Zen Maru Gothic",sans-serif; font-weight:900; color:var(--ink);
+    font-size:14.5px; letter-spacing:.04em; display:block; margin-bottom:6px;
   }
+  .warn .warn-title::before{content:"♡ "; color:var(--pink)}
 
   /* ---------- 着せ替えデモ（CSSのみ） ---------- */
-  .demo{position:relative}
+  .demo{position:relative; max-width:860px; margin:0 auto}
   .demo input{position:absolute; opacity:0; pointer-events:none}
   .browser{
-    background:#fffdf8; border:1px solid var(--ink); text-align:left;
+    background:var(--white); border-radius:30px; text-align:left;
+    box-shadow:var(--shadow-pink); padding:12px 12px 0; overflow:hidden;
   }
   .browser-bar{
-    display:flex; align-items:center; gap:7px;
-    padding:11px 16px; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:7px; padding:6px 10px 14px;
   }
-  .dot{width:9px; height:9px; border-radius:50%; border:1px solid var(--line-dark)}
+  .dot{width:12px; height:12px; border-radius:50%}
+  .dot.d-p{background:#ffb3cd}
+  .dot.d-y{background:#ffe1a1}
+  .dot.d-m{background:#a9ecd9}
   .addr{
-    flex:1; margin-left:10px; border:1px solid var(--line);
-    font-size:11px; letter-spacing:.14em; color:var(--ink-faint); padding:4px 14px;
+    flex:1; margin-left:10px; background:var(--pink-soft);
+    border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:.08em;
+    color:var(--ink-soft); padding:6px 16px;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
   }
-  .stage{position:relative; aspect-ratio:16/10; background:var(--paper-2)}
+  .stage{position:relative; aspect-ratio:16/10; border-radius:20px; overflow:hidden; background:var(--lav-soft)}
   .stage img{
     position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
     opacity:0; transition:opacity .7s ease;
   }
   .stage .cap{
-    position:absolute; left:0; bottom:0; z-index:3;
-    background:var(--paper); border-top:1px solid var(--ink); border-right:1px solid var(--ink);
-    padding:7px 16px; font-size:12px; letter-spacing:.14em; color:var(--ink);
-    font-family:"Shippori Mincho",serif; font-weight:600;
+    position:absolute; left:14px; bottom:14px; z-index:3;
+    background:rgba(255,255,255,.92); border-radius:999px;
+    padding:7px 18px; font-size:12.5px; font-weight:800; letter-spacing:.05em; color:var(--pink-deep);
+    font-family:"Zen Maru Gothic",sans-serif;
     opacity:0; transition:opacity .7s ease;
   }
   #d1:checked ~ .browser .s1, #d2:checked ~ .browser .s2,
@@ -185,120 +249,145 @@
   #d1:checked ~ .browser .c1, #d2:checked ~ .browser .c2,
   #d3:checked ~ .browser .c3, #d4:checked ~ .browser .c4{opacity:1}
   .chips{
-    display:flex; flex-wrap:wrap; gap:0; margin-top:0;
-    border:1px solid var(--ink); border-top:none;
+    display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:22px;
   }
   .chips label{
-    cursor:pointer; flex:1 1 160px; text-align:center;
-    padding:13px 10px; font-size:12.5px; letter-spacing:.1em; color:var(--ink-soft);
-    border-right:1px solid var(--line); background:var(--paper);
+    cursor:pointer; padding:11px 22px; font-size:13.5px; font-weight:800; letter-spacing:.03em;
+    color:var(--ink-soft); background:var(--white); border-radius:999px;
+    box-shadow:var(--shadow-soft); border:2px solid transparent;
+    transition:transform .2s ease, color .2s ease, background .2s ease;
   }
-  .chips label:last-child{border-right:none}
-  .chips label:hover{color:var(--ink); background:var(--paper-2)}
+  .chips label:hover{transform:translateY(-2px); color:var(--pink-deep)}
   #d1:checked ~ .chips label[for="d1"], #d2:checked ~ .chips label[for="d2"],
   #d3:checked ~ .chips label[for="d3"], #d4:checked ~ .chips label[for="d4"]{
-    background:var(--ink); color:var(--paper);
+    background:linear-gradient(120deg,var(--pink),#ffb3d1); color:#fff; border-color:#fff;
+    box-shadow:var(--shadow-pink);
   }
-  .demo .hint{font-size:12px; color:var(--ink-faint); letter-spacing:.08em; margin-top:16px}
+  .demo .hint{text-align:center; font-size:12.5px; color:var(--ink-soft); margin-top:18px; font-weight:700}
 
   /* ---------- テーマギャラリー ---------- */
-  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:44px 28px}
-  .theme{border-top:1px solid var(--ink); padding-top:14px}
-  .theme .thumb{overflow:hidden; border:1px solid var(--line)}
+  .wip-note{
+    max-width:720px; margin:0 auto 40px; text-align:center;
+    background:var(--lav-soft); border-radius:999px; padding:12px 26px;
+    font-size:13px; font-weight:700; color:#6f5bd6; line-height:1.8;
+  }
+  .grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(290px,1fr)); gap:26px}
+  .theme{
+    background:var(--white); border-radius:28px; padding:14px 14px 22px;
+    box-shadow:var(--shadow-soft);
+    transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .theme:hover{transform:translateY(-5px); box-shadow:var(--shadow-pink)}
+  .theme .thumb{position:relative; overflow:hidden; border-radius:18px}
   .theme .thumb img{width:100%; aspect-ratio:16/10; object-fit:cover; transition:transform .6s ease}
-  .theme:hover .thumb img{transform:scale(1.03)}
-  .theme .t-head{
-    display:flex; align-items:baseline; justify-content:space-between; gap:12px;
-    margin:16px 0 6px;
+  .theme:hover .thumb img{transform:scale(1.05)}
+  .theme .free{
+    position:absolute; top:10px; right:10px; z-index:2;
+    background:linear-gradient(120deg,var(--pink),#ffb3d1); color:#fff;
+    font-size:10.5px; font-weight:800; letter-spacing:.18em;
+    padding:5px 13px; border-radius:999px; box-shadow:var(--shadow-pink);
   }
   .theme h3{
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    margin:0; font-size:16.5px; font-weight:600; letter-spacing:.05em; line-height:1.6;
+    font-family:"Zen Maru Gothic",sans-serif;
+    margin:16px 8px 6px; font-size:16.5px; font-weight:900; letter-spacing:.03em; line-height:1.55;
   }
-  .theme .free{
-    flex:none; font-family:"Jost",sans-serif; font-weight:400; font-size:10px;
-    letter-spacing:.28em; color:var(--accent); text-transform:uppercase;
-  }
-  .theme p{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.95}
+  .theme p{margin:0 8px; font-size:13px; color:var(--ink-soft); line-height:1.9}
 
   /* ---------- 特徴 ---------- */
-  .features{border-top:1px solid var(--ink)}
+  .features{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:18px}
   .feature{
-    display:grid; grid-template-columns:64px 220px 1fr; gap:8px 28px;
-    padding:26px 4px; border-bottom:1px solid var(--line); align-items:baseline;
+    background:var(--white); border-radius:26px; padding:28px 24px;
+    box-shadow:var(--shadow-soft); text-align:center;
+    transition:transform .3s ease, box-shadow .3s ease;
   }
-  .feature .num{
-    font-family:"Shippori Mincho",serif; font-size:22px; font-weight:500; color:var(--accent);
+  .feature:hover{transform:translateY(-4px); box-shadow:var(--shadow-pink)}
+  .feature .ic{
+    width:58px; height:58px; border-radius:50%; margin:0 auto 16px;
+    display:flex; align-items:center; justify-content:center; font-size:24px;
   }
+  .feature:nth-child(1) .ic{background:var(--pink-soft); color:var(--pink-deep)}
+  .feature:nth-child(2) .ic{background:var(--lav-soft); color:#8a76e8}
+  .feature:nth-child(3) .ic{background:var(--mint-soft); color:#1fae87}
+  .feature:nth-child(4) .ic{background:var(--sky-soft); color:#3d9be9}
   .feature h3{
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    margin:0; font-size:16.5px; font-weight:600; letter-spacing:.05em;
+    font-family:"Zen Maru Gothic",sans-serif;
+    margin:0 0 8px; font-size:16.5px; font-weight:900; letter-spacing:.03em;
   }
-  .feature p{margin:0; font-size:13.5px; color:var(--ink-soft); line-height:2}
-  @media (max-width:700px){
-    .feature{grid-template-columns:44px 1fr}
-    .feature p{grid-column:2}
-  }
+  .feature p{margin:0; font-size:13px; color:var(--ink-soft); line-height:1.9}
 
   /* ---------- フィードバック ---------- */
   .feedback{
-    border:1px solid var(--ink); padding:56px 40px; text-align:left;
-    display:grid; grid-template-columns:1fr auto; gap:24px 48px; align-items:center;
+    border-radius:34px; padding:52px 44px; text-align:center;
+    background:linear-gradient(120deg,#ff9ec2,#c3aef9);
+    box-shadow:var(--shadow-pink); color:#fff;
   }
   .feedback h2{
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    margin:0 0 12px; font-size:clamp(21px,3.4vw,28px); font-weight:600;
-    letter-spacing:.05em; line-height:1.6;
+    font-family:"Zen Maru Gothic",sans-serif;
+    margin:0 0 14px; font-size:clamp(22px,3.6vw,30px); font-weight:900;
+    letter-spacing:.03em; line-height:1.6;
   }
-  .feedback p{color:var(--ink-soft); line-height:2; margin:0; font-size:14px; max-width:560px}
+  .feedback p{line-height:1.95; margin:0 auto 28px; font-size:14.5px; max-width:560px; font-weight:500}
   .btn{
-    display:inline-block; background:var(--ink); color:var(--paper); text-decoration:none;
-    font-size:13px; letter-spacing:.16em; padding:17px 30px; white-space:nowrap;
+    display:inline-block; background:#fff; color:var(--pink-deep); text-decoration:none;
+    font-family:"Zen Maru Gothic",sans-serif;
+    font-weight:900; font-size:15px; letter-spacing:.05em;
+    padding:16px 38px; border-radius:999px; box-shadow:0 10px 24px rgba(89,67,78,.22);
+    transition:transform .2s ease;
   }
-  .btn:hover{background:var(--accent)}
-  @media (max-width:700px){ .feedback{grid-template-columns:1fr; padding:40px 26px} }
+  .btn:hover{transform:scale(1.05)}
+  @media (max-width:700px){ .feedback{padding:40px 26px} }
 
   /* ---------- 広告枠 ---------- */
   .ad-slot{
-    border:1px dashed var(--line-dark); padding:34px 22px;
-    text-align:center; color:var(--ink-soft);
-    font-family:"Shippori Mincho",serif; font-size:14px; letter-spacing:.14em;
+    border:3px dashed #f3c3d8; border-radius:26px; padding:36px 22px;
+    text-align:center; color:var(--ink-soft); background:rgba(255,255,255,.6);
+    font-family:"Zen Maru Gothic",sans-serif; font-weight:700; font-size:14.5px; letter-spacing:.08em;
   }
   .ad-slot .ad-label{
-    display:block; font-family:"Jost",sans-serif; font-weight:300; font-size:10px;
-    letter-spacing:.4em; color:var(--ink-faint); margin-bottom:10px; text-transform:uppercase;
+    display:block; font-size:10px; font-weight:800;
+    letter-spacing:.4em; color:#d9a7bf; margin-bottom:10px; text-transform:uppercase;
   }
-  .ad-slot small{display:block; margin-top:10px; color:var(--ink-faint); font-family:"Zen Kaku Gothic New",sans-serif; font-size:12px; letter-spacing:.06em; line-height:1.9}
+  .ad-slot small{display:block; margin-top:10px; color:var(--ink-soft); font-family:"M PLUS Rounded 1c",sans-serif; font-weight:500; font-size:12px; letter-spacing:.03em; line-height:1.9}
 
   /* ---------- FAQ ---------- */
-  .faq{border-top:1px solid var(--ink); max-width:820px}
-  .faq details{border-bottom:1px solid var(--line)}
+  .faq{max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px}
+  .faq details{
+    background:var(--white); border-radius:22px; box-shadow:var(--shadow-soft);
+    padding:4px 24px;
+  }
   .faq summary{
-    cursor:pointer; list-style:none; padding:20px 4px;
-    font-family:"Shippori Mincho",serif; font-feature-settings:"palt" 1;
-    font-weight:600; font-size:15.5px; letter-spacing:.05em;
-    display:flex; justify-content:space-between; gap:16px;
+    cursor:pointer; list-style:none; padding:18px 2px;
+    font-family:"Zen Maru Gothic",sans-serif;
+    font-weight:900; font-size:15.5px; letter-spacing:.03em;
+    display:flex; justify-content:space-between; align-items:center; gap:16px;
   }
   .faq summary::-webkit-details-marker{display:none}
-  .faq summary::after{content:"＋"; color:var(--ink-faint); font-weight:400}
-  .faq details[open ] summary::after{content:"−"}
-  .faq p{margin:0; padding:0 4px 22px; font-size:13.5px; color:var(--ink-soft); line-height:2; max-width:640px}
+  .faq summary::after{
+    content:"＋"; flex:none; width:28px; height:28px; border-radius:50%;
+    background:var(--pink-soft); color:var(--pink-deep);
+    display:flex; align-items:center; justify-content:center; font-size:14px;
+    transition:transform .3s ease;
+  }
+  .faq details[open ] summary::after{transform:rotate(45deg)}
+  .faq p{margin:0; padding:0 2px 20px; font-size:13.5px; color:var(--ink-soft); line-height:1.95; max-width:640px}
 
   footer{
-    margin-top:120px; border-top:1px solid var(--ink);
-    padding:34px 28px 44px; max-width:1080px; margin-left:auto; margin-right:auto;
-    display:flex; flex-wrap:wrap; justify-content:space-between; gap:14px;
-    font-size:12px; letter-spacing:.14em; color:var(--ink-soft); line-height:2;
+    margin-top:110px; background:var(--white);
+    border-top:3px dotted var(--pink-soft);
+    padding:36px 28px 46px;
+    text-align:center;
+    font-size:12.5px; font-weight:700; letter-spacing:.06em; color:var(--ink-soft); line-height:2.1;
   }
+  footer .f-brand{font-family:"Zen Maru Gothic",sans-serif; font-weight:900; font-size:17px; color:var(--ink)}
+  footer .f-brand .heart{color:var(--pink)}
   footer a{color:var(--ink-soft); text-decoration:none}
-  footer a:hover{color:var(--ink); text-decoration:underline; text-underline-offset:4px}
-  footer .en{font-size:10px}
+  footer a:hover{color:var(--pink-deep); text-decoration:underline; text-underline-offset:4px}
 </style>
 </head>
 <body>
 
 <nav class="nav">
-  <a class="brand" href="#">もこブラ<small>MOKOBURA</small></a>
+  <a class="brand" href="#">もこブラ<span class="heart">♡</span><small>MOKOBURA</small></a>
   <div class="nav-links">
     <a href="#download">ダウンロード</a>
     <a href="#themes">テーマ</a>
@@ -309,34 +398,57 @@
 </nav>
 
 <header class="hero">
-  <p class="kicker en">A dress-up browser — for PC, free</p>
-  <h1>毎日開くブラウザを、<br>好きな世界に着せ替えよう。</h1>
-  <p class="lead">森の朝、海の底、二人だけの月面。気分のままにブラウザ全体の世界を着せ替えられる、PCのための小さなブラウザです。細い線と静かな色で描かれた9つの世界を、ぜんぶ無料で。</p>
-  <p class="meta"><span>PC版</span><span>完全無料</span><span>アカウント登録なし</span><span>テーマ9種</span></p>
+  <span class="spark" style="top:56px; left:12%; font-size:22px">✦</span>
+  <span class="spark lav" style="top:120px; right:10%; font-size:17px; animation-delay:.8s">✦</span>
+  <span class="spark sky" style="top:210px; left:5%; font-size:14px; animation-delay:1.6s">✧</span>
+  <span class="spark" style="top:250px; right:6%; font-size:20px; animation-delay:.4s">✧</span>
+  <p class="badge">PC専用 ♡ 着せ替えブラウザ</p>
+  <h1>毎日開くブラウザを、<br><span class="grad">お気に入りの世界</span>に<br>着せ替えよ♡</h1>
+  <p class="lead">森の朝、海の底、二人だけの月面——。スマホを着せ替えるみたいに、ブラウザ全体をその日の気分で着せ替えられる、キラキラ可愛いブラウザです。テーマは9種類、ぜんぶ無料♡</p>
+  <ul class="meta">
+    <li>PC版</li>
+    <li>完全無料</li>
+    <li>アカウント登録なし</li>
+    <li>テーマ9種</li>
+  </ul>
   <figure class="hero-fig">
+    <span class="sticker s1">ぜんぶ無料♡</span>
+    <span class="sticker s2">登録いらないよ✦</span>
     <div class="frame"><img src="assets/themes/deer-warm-forest.webp" alt="鹿と暖かな森のテーマ"></div>
-    <figcaption><span>テーマ 02 — 鹿と暖かな森</span><span class="en">Theme 02 / Deer in a warm forest</span></figcaption>
+    <figcaption><span>テーマ 02 — 鹿と暖かな森</span><span>Theme 02 / Deer in a warm forest</span></figcaption>
   </figure>
 </header>
 
 <section id="download">
   <div class="sec-head">
-    <p class="no">No.01 — Download</p>
-    <h2>ダウンロード</h2>
-    <p>お使いのPCに合わせて選んでください。どの版も無料、アカウント登録は要りません。</p>
+    <p class="kicker">Download</p>
+    <h2><span class="sp">✦</span>ダウンロード<span class="sp">✦</span></h2>
+    <p>お使いのPCに合わせて選んでね。どの版も無料で、アカウント登録はいりません。</p>
   </div>
-  <div class="dl-list">
-    <a class="dl-row-item" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-mac-arm64.dmg">
-      <span class="os">Mac<small>Apple Silicon（M1以降）</small></span><span class="get">Download</span>
+  <div class="dl-grid">
+    <a class="dl-card c-pink" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-mac-arm64.dmg">
+      <span class="os-ic">Mac</span>
+      <span class="os">Mac</span>
+      <span class="os-note">Apple Silicon（M1以降）</span>
+      <span class="get">ダウンロード ↓</span>
     </a>
-    <a class="dl-row-item" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-mac-x64.dmg">
-      <span class="os">Mac<small>Intel</small></span><span class="get">Download</span>
+    <a class="dl-card c-lav" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-mac-x64.dmg">
+      <span class="os-ic">Mac</span>
+      <span class="os">Mac</span>
+      <span class="os-note">Intel</span>
+      <span class="get">ダウンロード ↓</span>
     </a>
-    <a class="dl-row-item" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-win-portable.exe">
-      <span class="os">Windows<small>ポータブル版</small></span><span class="get">Download</span>
+    <a class="dl-card c-sky" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-win-portable.exe">
+      <span class="os-ic">Win</span>
+      <span class="os">Windows</span>
+      <span class="os-note">ポータブル版</span>
+      <span class="get">ダウンロード ↓</span>
     </a>
-    <a class="dl-row-item" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-linux.AppImage">
-      <span class="os">Linux<small>AppImage</small></span><span class="get">Download</span>
+    <a class="dl-card c-mint" href="https://github.com/tetto03twianac1910-cmd/mokobura/releases/latest/download/mokobura-linux.AppImage">
+      <span class="os-ic">Lin</span>
+      <span class="os">Linux</span>
+      <span class="os-note">AppImage</span>
+      <span class="get">ダウンロード ↓</span>
     </a>
   </div>
   <p class="dl-note">Mac / Windows / Linux ・ 無料 ・ アカウント登録なし</p>
@@ -348,9 +460,9 @@
 
 <section id="demo">
   <div class="sec-head">
-    <p class="no">No.02 — Dress up</p>
-    <h2>着せ替えを、少しだけ体験</h2>
-    <p>下の名前を選ぶと、ブラウザの世界が切り替わります。実際のアプリでは、9テーマぜんぶを同じ手軽さで着せ替えられます。</p>
+    <p class="kicker">Dress up</p>
+    <h2><span class="sp">✦</span>着せ替えを、少しだけ体験<span class="sp">✦</span></h2>
+    <p>下の名前を選ぶと、ブラウザの世界が切り替わるよ。実際のアプリでは、9テーマぜんぶを同じ手軽さで着せ替えられます。</p>
   </div>
   <div class="demo">
     <input type="radio" name="demo" id="d1" checked>
@@ -359,7 +471,7 @@
     <input type="radio" name="demo" id="d4">
     <div class="browser">
       <div class="browser-bar">
-        <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        <span class="dot d-p"></span><span class="dot d-y"></span><span class="dot d-m"></span>
         <span class="addr">mokobura — 新しいタブ</span>
       </div>
       <div class="stage">
@@ -385,54 +497,55 @@
 
 <section id="themes">
   <div class="sec-head">
-    <p class="no">No.03 — Themes</p>
-    <h2>テーマは9種類、ぜんぶ無料</h2>
-    <p>どの世界に住むかは、その日の気分で。細い線と静かな色で描かれた、9つの小さな世界を用意しました。</p>
+    <p class="kicker">Themes</p>
+    <h2><span class="sp">✦</span>テーマは9種類、ぜんぶ無料<span class="sp">✦</span></h2>
+    <p>どの世界に住むかは、その日の気分で決めよ♡ 9つの小さな世界を用意しました。</p>
   </div>
+  <p class="wip-note">※ テーマのイラストは、ただいまデザイナーさんが新しい絵に描き直し中です。ここでは仮のイラストで紹介しています。</p>
   <div class="grid">
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/spider-forest.webp" alt="蜘蛛と鬱蒼とした森" loading="lazy"></div>
-      <div class="t-head"><h3>蜘蛛と鬱蒼とした森</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/spider-forest.webp" alt="蜘蛛と鬱蒼とした森" loading="lazy"><span class="free">FREE</span></div>
+      <h3>蜘蛛と鬱蒼とした森</h3>
       <p>苔むした暗い森と静かな蜘蛛。雫の光る、しっとりした世界。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/deer-warm-forest.webp" alt="鹿と暖かな森" loading="lazy"></div>
-      <div class="t-head"><h3>鹿と暖かな森</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/deer-warm-forest.webp" alt="鹿と暖かな森" loading="lazy"><span class="free">FREE</span></div>
+      <h3>鹿と暖かな森</h3>
       <p>夕日の木漏れ日と穏やかな鹿。あたたかい午後の森。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/whale-deep-sea.webp" alt="クジラと深い海" loading="lazy"></div>
-      <div class="t-head"><h3>クジラと深い海</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/whale-deep-sea.webp" alt="クジラと深い海" loading="lazy"><span class="free">FREE</span></div>
+      <h3>クジラと深い海</h3>
       <p>深海の静けさと大きなクジラ。光の差す青の底へ。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/astronauts-moon.webp" alt="月と二人だけの宇宙飛行士" loading="lazy"></div>
-      <div class="t-head"><h3>月と二人だけの宇宙飛行士</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/astronauts-moon.webp" alt="月と二人だけの宇宙飛行士" loading="lazy"><span class="free">FREE</span></div>
+      <h3>月と二人だけの宇宙飛行士</h3>
       <p>暗い空、大きな月、二人だけの宇宙。静けさに包まれる夜。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/city-girl.webp" alt="都会の大人可愛い女子の日常" loading="lazy"></div>
-      <div class="t-head"><h3>都会の大人可愛い女子の日常</h3><span class="free">Free</span></div>
-      <p>静かでおしゃれな都会の日常。カフェと本と夕方の街。</p>
+      <div class="thumb"><img src="assets/themes/city-girl.webp" alt="都会の大人可愛い女子の日常" loading="lazy"><span class="free">FREE</span></div>
+      <h3>都会の大人可愛い女子の日常</h3>
+      <p>おしゃれな都会の日常。カフェと本と夕方の街。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/gamer-neon.webp" alt="ゲーム女子とレトロなネオン空間" loading="lazy"></div>
-      <div class="t-head"><h3>ゲーム女子とレトロなネオン空間</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/gamer-neon.webp" alt="ゲーム女子とレトロなネオン空間" loading="lazy"><span class="free">FREE</span></div>
+      <h3>ゲーム女子とレトロなネオン空間</h3>
       <p>ネオンの部屋とレトロゲームの光。夜ふかしの相棒に。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/japanese-garden.webp" alt="温かみのある和風な日本庭園" loading="lazy"></div>
-      <div class="t-head"><h3>温かみのある和風な日本庭園</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/japanese-garden.webp" alt="温かみのある和風な日本庭園" loading="lazy"><span class="free">FREE</span></div>
+      <h3>温かみのある和風な日本庭園</h3>
       <p>砂紋と苔と灯籠の庭園。ほっとする和の静けさ。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/bold-colors.webp" alt="大胆な配色" loading="lazy"></div>
-      <div class="t-head"><h3>大胆な配色</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/bold-colors.webp" alt="大胆な配色" loading="lazy"><span class="free">FREE</span></div>
+      <h3>大胆な配色</h3>
       <p>ビビッドでポップなカラーの世界。気分を上げたい日に。</p>
     </article>
     <article class="theme">
-      <div class="thumb"><img src="assets/themes/girlfriend.webp" alt="あなただけの美少女恋人" loading="lazy"></div>
-      <div class="t-head"><h3>あなただけの美少女恋人</h3><span class="free">Free</span></div>
+      <div class="thumb"><img src="assets/themes/girlfriend.webp" alt="あなただけの美少女恋人" loading="lazy"><span class="free">FREE</span></div>
+      <h3>あなただけの美少女恋人</h3>
       <p>開くたびに迎えてくれる彼女。柔らかなピンクの部屋で。</p>
     </article>
   </div>
@@ -440,28 +553,28 @@
 
 <section id="features">
   <div class="sec-head">
-    <p class="no">No.04 — Features</p>
-    <h2>可愛いだけじゃない、ちゃんと使える</h2>
+    <p class="kicker">Features</p>
+    <h2><span class="sp">✦</span>可愛いだけじゃない、ちゃんと使える<span class="sp">✦</span></h2>
     <p>毎日開く道具だから、実用面も手を抜きません。</p>
   </div>
   <div class="features">
     <div class="feature">
-      <span class="num">01</span>
+      <span class="ic">♡</span>
       <h3>全テーマ無料</h3>
       <p>9つのテーマは全部無料。課金要素はひとつもありません。</p>
     </div>
     <div class="feature">
-      <span class="num">02</span>
+      <span class="ic">✦</span>
       <h3>アプリ内広告なし</h3>
       <p>ブラウザの中に広告は入りません。世界観を壊さないことが約束です。</p>
     </div>
     <div class="feature">
-      <span class="num">03</span>
+      <span class="ic">★</span>
       <h3>アカウント登録なし</h3>
       <p>ダウンロードしたらすぐ使えます。ログインも個人情報の登録も不要です。</p>
     </div>
     <div class="feature">
-      <span class="num">04</span>
+      <span class="ic">♪</span>
       <h3>履歴・ブックマーク</h3>
       <p>日々のブラウジングに必要な機能はひと通り。いつもの使い心地のままです。</p>
     </div>
@@ -470,18 +583,16 @@
 
 <section id="feedback">
   <div class="feedback">
-    <div>
-      <h2>あなたの声で、もこブラは育ちます</h2>
-      <p>「こんなテーマがほしい」「ここが使いにくい」「この世界が好き」——どんな声でも大歓迎です。届いた声は開発のいちばんの材料になります。次のテーマは、あなたのリクエストから生まれるかもしれません。</p>
-    </div>
-    <a class="btn" href="https://github.com/tetto03twianac1910-cmd/mokobura/issues/new/choose">声をとどける</a>
+    <h2>あなたの声で、もこブラは育ちます♡</h2>
+    <p>「こんなテーマがほしい」「ここが使いにくい」「この世界が好き」——どんな声でも大歓迎です。届いた声は開発のいちばんの材料になります。次のテーマは、あなたのリクエストから生まれるかもしれません。</p>
+    <a class="btn" href="https://github.com/tetto03twianac1910-cmd/mokobura/issues/new/choose">声をとどける ✉</a>
   </div>
 </section>
 
 <section id="ads">
   <div class="sec-head">
-    <p class="no">No.05 — About ads</p>
-    <h2>広告について</h2>
+    <p class="kicker">About ads</p>
+    <h2><span class="sp">✦</span>広告について<span class="sp">✦</span></h2>
   </div>
   <div class="ad-slot">
     <span class="ad-label">Advertisement</span>
@@ -492,8 +603,8 @@
 
 <section id="faq">
   <div class="sec-head">
-    <p class="no">No.06 — FAQ</p>
-    <h2>よくある質問</h2>
+    <p class="kicker">FAQ</p>
+    <h2><span class="sp">✦</span>よくある質問<span class="sp">✦</span></h2>
   </div>
   <div class="faq">
     <details>
@@ -512,12 +623,10 @@
 </section>
 
 <footer>
-  <span>© もこブラ project</span>
-  <span class="en">Mokobura — a dress-up browser</span>
-  <span>
-    <a href="https://github.com/tetto03twianac1910-cmd/mokobura">GitHub リポジトリ</a> ・
-    <a href="https://github.com/tetto03twianac1910-cmd/mokobura/issues/new/choose">フィードバック</a>
-  </span>
+  <span class="f-brand">もこブラ<span class="heart">♡</span></span><br>
+  © もこブラ project<br>
+  <a href="https://github.com/tetto03twianac1910-cmd/mokobura">GitHub リポジトリ</a> ・
+  <a href="https://github.com/tetto03twianac1910-cmd/mokobura/issues/new/choose">フィードバック</a>
 </footer>
 
 </body>
