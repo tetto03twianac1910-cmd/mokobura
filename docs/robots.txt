@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tetto03twianac1910-cmd.github.io/mokobura/sitemap.xml

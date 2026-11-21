@@ -3,7 +3,14 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 contextBridge.exposeInMainWorld("mokobura", {
   getSettings: () => ipcRenderer.invoke("settings:get"),
-  setTheme: (themeId) => ipcRenderer.invoke("settings:set-theme", themeId),
+  getTabsState: () => ipcRenderer.invoke("tabs:get-state"),
+  setTheme: (theme) => ipcRenderer.invoke("theme:set", theme),
+  pickPhoto: () => ipcRenderer.invoke("photo:pick"),
+  removePhoto: () => ipcRenderer.invoke("photo:remove"),
+  importChromeBookmarks: () => ipcRenderer.invoke("chrome:import-bookmarks"),
+  dismissImportHint: () => ipcRenderer.invoke("import-hint:dismiss"),
+  exportData: () => ipcRenderer.invoke("data:export"),
+  importData: () => ipcRenderer.invoke("data:import"),
   createTab: (url) => ipcRenderer.invoke("tabs:create", url),
   closeTab: (id) => ipcRenderer.invoke("tabs:close", id),
   activateTab: (id) => ipcRenderer.invoke("tabs:activate", id),

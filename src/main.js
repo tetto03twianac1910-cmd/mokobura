@@ -1,9 +1,13 @@
 // もこブラ (仮名) — PC無料版メイン プロセス
 // エンジンは Electron 内蔵の Chromium を使う。自前エンジンは持たない。
-// 設計方針: サーバーなし / ログインなし / 公式テーマのみ / 全テーマ無料。
-const { app, BrowserWindow, WebContentsView, ipcMain, shell } = require("electron");
+// 設計方針 (docs/BRAND.md): サーバーなし / ログインなし / 使い方は Chrome と同じ /
+// テーマの主役はユーザーの写真と色 / 設定とデータは書き出して守れる。
+const { app, BrowserWindow, WebContentsView, ipcMain, shell, dialog } = require("electron");
 const path = require("path");
 const fs = require("fs");
+const { pathToFileURL } = require("url");
+const { findChromeBookmarksFiles, parseChromeBookmarks } = require("./chrome-import");
+const { COLOR_THEMES, LEGACY_THEMES, DEFAULT_THEME } = require("./themes/themes");
 
 const HOME_URL = "about:blank";
 let win = null;
@@ -11,7 +15,7 @@ let views = new Map(); // tabId -> WebContentsView
 let activeTab = null;
 let tabSeq = 0;
 
-const CHROME_HEIGHT = 118; // タブバー + アドレスバー + テーマバーの高さ(px)
+const CHROME_HEIGHT = 84; // タブバー + アドレスバーの高さ(px)。外枠は薄く保つ。
 
 function isHomeView(view) {
   const u = view.webContents.getURL();
@@ -23,7 +27,7 @@ function layout() {
   const { width, height } = win.getContentBounds();
   for (const [id, view] of views) {
     // 新規タブ (URLなし) のときは view を畳み、renderer 側の
-    // 新規タブページ (壁紙+検索) を見せる。
+    // 新規タブページ (写真+検索) を見せる。
     const show = id === activeTab && !isHomeView(view);
     view.setBounds(
       show
@@ -33,9 +37,8 @@ function layout() {
   }
 }
 
-function sendChromeState() {
-  if (!win) return;
-  const tabs = [...views.entries()].map(([id, view]) => ({
+function buildTabsState() {
+  return [...views.entries()].map(([id, view]) => ({
     id,
     title: view.webContents.getTitle() || "新しいタブ",
     url: view.webContents.getURL(),
@@ -45,7 +48,10 @@ function sendChromeState() {
     loading: view.webContents.isLoading(),
     isHome: isHomeView(view)
   }));
-  win.webContents.send("tabs:state", tabs);
+}
+function sendChromeState() {
+  if (!win) return;
+  win.webContents.send("tabs:state", buildTabsState());
 }
 
 function createTab(url = HOME_URL) {
@@ -112,15 +118,69 @@ function recordHistory(url, title) {
   saveData(d);
 }
 
+// ---- 設定 (形式バージョン2。旧形式からは自動移行する。黙って初期化しない) ----
 function settingsPath() {
   return path.join(app.getPath("userData"), "settings.json");
 }
+function migrateSettings(raw) {
+  if (raw && raw.version === 2 && raw.theme && raw.theme.kind) return raw;
+  // 旧形式: { themeId: "..." } — 旧イラストテーマは legacy として引き継ぐ。
+  const legacyId = raw && LEGACY_THEMES.some((t) => t.id === raw.themeId) ? raw.themeId : null;
+  return {
+    version: 2,
+    theme: legacyId ? { kind: "legacy", id: legacyId } : { ...DEFAULT_THEME },
+    photoFile: null,
+    chromeImportedAt: null,
+    importHintDismissed: false
+  };
+}
 function loadSettings() {
-  try { return JSON.parse(fs.readFileSync(settingsPath(), "utf8")); }
-  catch { return { themeId: "deer-warm-forest" }; }
+  try { return migrateSettings(JSON.parse(fs.readFileSync(settingsPath(), "utf8"))); }
+  catch { return migrateSettings(null); }
 }
 function saveSettings(s) {
   try { fs.writeFileSync(settingsPath(), JSON.stringify(s, null, 2)); } catch {}
+}
+function photosDir() {
+  return path.join(app.getPath("userData"), "photos");
+}
+// renderer へ渡す形: 写真の file:// URL を解決して付ける。
+function publicSettings() {
+  const s = loadSettings();
+  let photoUrl = null;
+  if (s.photoFile) {
+    const p = path.join(photosDir(), s.photoFile);
+    if (fs.existsSync(p)) photoUrl = pathToFileURL(p).href;
+  }
+  return { ...s, photoUrl };
+}
+function setSettings(patch) {
+  const s = { ...loadSettings(), ...patch };
+  saveSettings(s);
+  return publicSettings();
+}
+
+// ---- Chrome からのブックマーク取り込み ----
+function importChromeBookmarks() {
+  const files = findChromeBookmarksFiles();
+  if (!files.length) return { ok: false, reason: "not-found", added: 0 };
+  let incoming = [];
+  for (const f of files) {
+    try { incoming = incoming.concat(parseChromeBookmarks(fs.readFileSync(f, "utf8"))); }
+    catch { /* 読めないプロファイルは飛ばす */ }
+  }
+  const d = loadData();
+  const known = new Set(d.bookmarks.map((b) => b.url));
+  let added = 0;
+  for (const b of incoming) {
+    if (known.has(b.url)) continue;
+    known.add(b.url);
+    d.bookmarks.push({ url: b.url, title: b.title, at: Date.now() });
+    added++;
+  }
+  saveData(d);
+  if (added > 0 || incoming.length > 0) setSettings({ chromeImportedAt: Date.now() });
+  return { ok: true, added, total: incoming.length, bookmarks: d.bookmarks };
 }
 
 function createWindow() {
@@ -141,11 +201,82 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  ipcMain.handle("settings:get", () => loadSettings());
+  // 旧形式の設定ファイルがあれば、移行後の形式で書き戻しておく。
+  saveSettings(loadSettings());
+  ipcMain.handle("settings:get", () => publicSettings());
+  ipcMain.handle("tabs:get-state", () => buildTabsState());
+  ipcMain.handle("theme:set", (_e, theme) => {
+    if (!theme || typeof theme !== "object" || !theme.kind) return publicSettings();
+    return setSettings({ theme });
+  });
+  // 旧 API 互換 (念のため): themeId 指定は legacy として解釈する。
   ipcMain.handle("settings:set-theme", (_e, themeId) => {
-    const s = { ...loadSettings(), themeId };
-    saveSettings(s);
-    return s;
+    const theme = COLOR_THEMES.some((t) => t.id === themeId)
+      ? { kind: "color", id: themeId }
+      : { kind: "legacy", id: themeId };
+    return setSettings({ theme });
+  });
+  ipcMain.handle("photo:pick", async () => {
+    const res = await dialog.showOpenDialog(win, {
+      title: "新規タブの背景にする写真を選ぶ",
+      properties: ["openFile"],
+      filters: [{ name: "画像", extensions: ["png", "jpg", "jpeg", "webp", "gif"] }]
+    });
+    if (res.canceled || !res.filePaths.length) return publicSettings();
+    const src = res.filePaths[0];
+    const ext = (path.extname(src) || ".png").toLowerCase();
+    const name = "photo-" + Date.now() + ext;
+    try {
+      fs.mkdirSync(photosDir(), { recursive: true });
+      // 旧写真は消す (端末内にコピーを溜めない)
+      const prev = loadSettings().photoFile;
+      if (prev && prev !== name) { try { fs.unlinkSync(path.join(photosDir(), prev)); } catch {} }
+      fs.copyFileSync(src, path.join(photosDir(), name));
+    } catch { return publicSettings(); }
+    const s = loadSettings();
+    const colorId = s.theme && s.theme.kind === "photo" ? s.theme.colorId
+      : s.theme && s.theme.kind === "color" ? s.theme.id : "sakura";
+    const overlay = s.theme && s.theme.kind === "photo" ? s.theme.overlay : 0.78;
+    return setSettings({ photoFile: name, theme: { kind: "photo", colorId, overlay } });
+  });
+  ipcMain.handle("photo:remove", () => {
+    const s = loadSettings();
+    if (s.photoFile) { try { fs.unlinkSync(path.join(photosDir(), s.photoFile)); } catch {} }
+    const colorId = s.theme && s.theme.kind === "photo" ? s.theme.colorId : DEFAULT_THEME.id;
+    return setSettings({ photoFile: null, theme: { kind: "color", id: colorId } });
+  });
+  ipcMain.handle("chrome:import-bookmarks", () => importChromeBookmarks());
+  ipcMain.handle("import-hint:dismiss", () => setSettings({ importHintDismissed: true }));
+  ipcMain.handle("data:export", async () => {
+    const res = await dialog.showSaveDialog(win, {
+      title: "設定とデータを書き出す",
+      defaultPath: "mokobura-data.json",
+      filters: [{ name: "JSON", extensions: ["json"] }]
+    });
+    if (res.canceled || !res.filePath) return { ok: false };
+    const payload = {
+      app: "mokobura", exportedAt: new Date().toISOString(),
+      settings: loadSettings(), data: loadData()
+    };
+    try { fs.writeFileSync(res.filePath, JSON.stringify(payload, null, 2)); return { ok: true }; }
+    catch { return { ok: false }; }
+  });
+  ipcMain.handle("data:import", async () => {
+    const res = await dialog.showOpenDialog(win, {
+      title: "書き出したデータを読み込む",
+      properties: ["openFile"],
+      filters: [{ name: "JSON", extensions: ["json"] }]
+    });
+    if (res.canceled || !res.filePaths.length) return { ok: false };
+    try {
+      const payload = JSON.parse(fs.readFileSync(res.filePaths[0], "utf8"));
+      if (payload.settings) saveSettings(migrateSettings(payload.settings));
+      if (payload.data) saveData({
+        history: Array.isArray(payload.data.history) ? payload.data.history : [],
+        bookmarks: Array.isArray(payload.data.bookmarks) ? payload.data.bookmarks : []
+      });
+      return { ok: true, settings: publicSettings() };
+    } catch { return { ok: false }; }
   });
   ipcMain.handle("tabs:create", (_e, url) => createTab(url));
   ipcMain.handle("tabs:close", (_e, id) => closeTab(id));

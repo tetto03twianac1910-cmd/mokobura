@@ -5,14 +5,14 @@
 <title>もこブラ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header id="chrome">
     <nav id="tabbar">
       <div id="tabs"></div>
-      <button id="newtab" title="新しいタブ">＋</button>
+      <button id="newtab-btn" title="新しいタブ">＋</button>
     </nav>
     <div id="navbar">
       <button id="back" title="戻る">‹</button>
@@ -20,21 +20,17 @@
       <button id="reload" title="再読み込み">⟳</button>
       <input id="address" type="text" placeholder="検索、またはURLを入力" spellcheck="false">
       <button id="star" title="ブックマーク">☆</button>
-      <button id="library-open" title="ブックマークと履歴">📚</button>
-      <button id="closet-open" title="着せ替え">🎀 着せ替え</button>
-      <button id="feedback-open" title="感想・要望・不具合報告を送る">💌 声をとどける</button>
-    </div>
-    <div id="themebar">
-      <span id="theme-name"></span>
-      <span id="theme-desc"></span>
+      <button id="library-open" class="textbtn" title="ブックマークと履歴">ライブラリ</button>
+      <button id="closet-open" class="textbtn accentbtn" title="色と写真で着せ替え">着せ替え</button>
+      <button id="feedback-open" class="textbtn" title="感想・要望・不具合報告を送る">感想</button>
     </div>
   </header>
 
   <main id="newtab">
     <img id="wallpaper" alt="">
+    <div id="photo-tint"></div>
     <div class="nt-center">
       <h1 id="nt-greeting">こんにちは</h1>
-      <p id="nt-theme-line"></p>
       <div class="nt-search">
         <input id="nt-query" type="text" placeholder="検索、またはURLを入力" spellcheck="false">
         <button id="nt-go">検索</button>
@@ -46,30 +42,88 @@
         <button data-url="https://www.amazon.co.jp">Amazon</button>
         <button data-url="https://github.com">GitHub</button>
       </div>
-      <p class="nt-hint">🎀 着せ替えボタンから、テーマと壁紙を変えられます</p>
+      <section id="import-card" hidden>
+        <h2>Chromeから引っ越してきましたか？</h2>
+        <p>ブックマークはそのまま取り込めます。使い方はChromeと一緒です。</p>
+        <div class="row">
+          <button id="import-btn" class="primary">Chromeのブックマークを取り込む</button>
+          <button id="import-dismiss" class="ghost">あとで</button>
+        </div>
+        <p class="fineprint">※ パスワードはChromeの暗号化の仕組み上、取り込めません。ブックマークだけが移行対象です。</p>
+        <p id="import-result" class="fineprint" hidden></p>
+      </section>
+      <p class="nt-hint">「着せ替え」から、自分の写真と色で変えられます</p>
     </div>
   </main>
 
   <aside id="library" hidden>
-    <div class="closet-head">
+    <div class="panel-head">
       <h2>ブックマーク</h2>
-      <button id="library-close">×</button>
+      <button id="library-close" class="closebtn">×</button>
     </div>
     <div id="bookmark-list" class="lib-list"></div>
-    <div class="closet-head" style="margin-top:18px">
+    <div class="panel-head" style="margin-top:18px">
       <h2>履歴</h2>
-      <button id="history-clear">消去</button>
+      <button id="history-clear" class="ghost small">消去</button>
     </div>
     <div id="history-list" class="lib-list"></div>
   </aside>
 
   <aside id="closet" hidden>
-    <div class="closet-head">
-      <h2>テーマクローゼット</h2>
-      <span class="free-note">全テーマ無料</span>
-      <button id="closet-close">×</button>
+    <div class="panel-head">
+      <h2>着せ替え</h2>
+      <span class="free-note">全て無料</span>
+      <button id="closet-close" class="closebtn">×</button>
     </div>
-    <div id="theme-grid"></div>
+
+    <section class="closet-sec">
+      <h3>自分の写真</h3>
+      <p class="sec-desc">好きな写真を、新規タブの背景にできます。写真はこのPCの中にだけ保存されます。</p>
+      <div class="row">
+        <button id="photo-pick" class="primary">写真を選ぶ</button>
+        <button id="photo-remove" class="ghost" hidden>写真をやめる</button>
+      </div>
+      <div id="photo-controls" hidden>
+        <label class="slider-label">写真のうすさ <span id="overlay-val"></span></label>
+        <input id="overlay" type="range" min="55" max="95" step="1">
+        <label class="slider-label">下地の色</label>
+        <div id="photo-base" class="chip-row"></div>
+      </div>
+    </section>
+
+    <section class="closet-sec">
+      <h3>いろ</h3>
+      <p class="sec-desc">色だけで着せ替える、基本のテーマです。</p>
+      <div id="color-grid"></div>
+    </section>
+
+    <section class="closet-sec">
+      <h3>じぶんカラー</h3>
+      <p class="sec-desc">好きな色を1つ選ぶと、全体の配色が自動で決まります。</p>
+      <div class="row">
+        <input id="custom-color" type="color" value="#b23a5b">
+        <label class="check"><input id="custom-dark" type="checkbox"> ダーク</label>
+        <button id="custom-apply" class="primary">この色にする</button>
+      </div>
+    </section>
+
+    <section class="closet-sec">
+      <h3>データの引っ越しと保管</h3>
+      <p class="sec-desc">テーマ・ブックマーク・履歴はこのPCの中にあります。書き出しておけば、PCを替えてもそのまま戻せます。</p>
+      <div class="row wrap">
+        <button id="chrome-import" class="ghost">Chromeのブックマークを取り込む</button>
+        <button id="data-export" class="ghost">書き出す</button>
+        <button id="data-import" class="ghost">読み込む</button>
+      </div>
+      <p id="data-result" class="fineprint" hidden></p>
+      <p class="fineprint">※ パスワードはChromeの暗号化の仕組み上、取り込めません。履歴と開いているタブも移行対象外です。</p>
+    </section>
+
+    <details class="closet-sec legacy">
+      <summary>おまけ：イラスト壁紙（旧テーマ）</summary>
+      <p class="sec-desc">初期バージョンのイラストテーマです。選んでいた人のために残しています。</p>
+      <div id="legacy-grid"></div>
+    </details>
   </aside>
 
   <script src="../themes/themes.js"></script>
