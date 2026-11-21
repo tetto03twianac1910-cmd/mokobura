@@ -1,0 +1,46 @@
+name: 💌 感想・要望
+description: 使ってみた感想や、ほしいテーマ・機能を教えてください
+title: "[感想] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        もこブラを使ってくれてありがとうございます！どんな小さな声でも、開発のいちばんの材料になります。
+  - type: textarea
+    id: impression
+    attributes:
+      label: 感想・要望
+      description: 良かったところ、気になったところ、ほしいテーマなど自由にどうぞ
+      placeholder: 例：鹿のテーマが好きです。夜桜のテーマがほしい！
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: 使っているOS
+      options:
+        - Windows
+        - Mac (Apple Silicon)
+        - Mac (Intel)
+        - Linux
+        - まだ使っていない
+    validations:
+      required: false
+  - type: dropdown
+    id: favorite
+    attributes:
+      label: お気に入りのテーマ（あれば）
+      options:
+        - 蜘蛛と鬱蒼とした森
+        - 鹿と暖かな森
+        - クジラと深い海
+        - 月と二人だけの宇宙飛行士
+        - 都会の大人可愛い女子の日常
+        - ゲーム女子とレトロなネオン空間
+        - 和風な日本庭園
+        - 大胆な配色
+        - あなただけの美少女恋人
+        - まだ決まっていない
+    validations:
+      required: false

@@ -18,10 +18,17 @@ body {
   padding: 7px 10px; border-radius: var(--radius) var(--radius) 0 0;
   background: var(--surface-alt); color: var(--muted);
   font-size: 12px; cursor: pointer; white-space: nowrap;
+  box-shadow: inset 0 3px 0 transparent;
+  transition: background .18s ease, color .18s ease, box-shadow .18s ease;
 }
-.tab.active { background: var(--surface); color: var(--text); }
+.tab:hover { background: var(--surface); color: var(--text); }
+.tab.active {
+  background: var(--surface); color: var(--text); font-weight: 700;
+  box-shadow: inset 0 3px 0 var(--accent), 0 -2px 8px rgba(0,0,0,.12);
+}
 .tab .title { overflow: hidden; text-overflow: ellipsis; }
-.tab .close { border: none; background: none; color: inherit; cursor: pointer; font-size: 13px; padding: 0; }
+.tab .close { border: none; background: none; color: inherit; cursor: pointer; font-size: 13px; padding: 0; border-radius: 50%; transition: color .15s ease, transform .15s ease; }
+.tab .close:hover { color: var(--accent); transform: scale(1.2); }
 #newtab {
   border: none; background: var(--surface-alt); color: var(--text);
   width: 28px; height: 28px; border-radius: 50%; cursor: pointer; font-size: 15px;
@@ -30,14 +37,25 @@ body {
 #navbar button {
   border: none; background: var(--surface-alt); color: var(--text);
   height: 34px; min-width: 34px; border-radius: 17px; cursor: pointer; font-size: 15px; padding: 0 10px;
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease, background .15s ease;
 }
+#navbar button:hover:not(:disabled) {
+  transform: translateY(-1px); filter: brightness(1.1);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--border) 55%, transparent);
+}
+#navbar button:active:not(:disabled) { transform: translateY(0) scale(.96); box-shadow: none; }
 #navbar button:disabled { opacity: .35; cursor: default; }
 #address {
   flex: 1; height: 34px; border-radius: 17px; border: 1px solid var(--border);
   background: var(--bg); color: var(--text); padding: 0 16px; font-size: 13px; outline: none;
+  transition: border-color .18s ease, box-shadow .18s ease;
 }
-#address:focus { border-color: var(--accent); }
+#address:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 38%, transparent);
+}
 #closet-open { background: var(--accent) !important; color: #221607 !important; font-weight: 700; }
+#feedback-open { font-size: 12.5px; white-space: nowrap; }
 #themebar {
   display: flex; gap: 10px; align-items: baseline; padding: 4px 14px;
   background: var(--surface); font-size: 11px; color: var(--muted);
@@ -64,6 +82,11 @@ body {
   display: flex; gap: 8px; width: min(560px, 90%);
   background: var(--surface); border: 1px solid var(--border);
   border-radius: 999px; padding: 6px; box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.nt-search:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 35%, transparent), 0 10px 30px rgba(0,0,0,.25);
 }
 .nt-search input {
   flex: 1; border: none; background: transparent; color: var(--text);
@@ -72,14 +95,19 @@ body {
 .nt-search button {
   border: none; background: var(--accent); color: #221607; font-weight: 700;
   border-radius: 999px; padding: 10px 22px; cursor: pointer; font-size: 14px;
+  transition: transform .15s ease, filter .15s ease;
 }
+.nt-search button:hover { transform: translateY(-1px); filter: brightness(1.07); }
+.nt-search button:active { transform: scale(.96); }
 #nt-shortcuts { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
 #nt-shortcuts button {
   border: 1px solid var(--border); background: var(--surface); color: var(--text);
   opacity: .94; border-radius: 999px; padding: 9px 18px; cursor: pointer; font-size: 13px;
   box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  transition: transform .15s ease, border-color .15s ease, opacity .15s ease, box-shadow .15s ease;
 }
-#nt-shortcuts button:hover { opacity: 1; border-color: var(--accent); }
+#nt-shortcuts button:hover { opacity: 1; border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.22); }
+#nt-shortcuts button:active { transform: scale(.96); }
 .nt-hint { color: #fff; opacity: .85; font-size: 12px; text-shadow: 0 1px 8px rgba(0,0,0,.45); margin: 4px 0 0; }
 #library {
   position: fixed; top: 0; right: 0; width: 340px; height: 100%;
@@ -94,8 +122,9 @@ body {
 .lib-list { margin-top: 10px; display: flex; flex-direction: column; gap: 4px; }
 .lib-item {
   padding: 8px 10px; border-radius: 10px; cursor: pointer; background: var(--surface-alt);
+  transition: transform .15s ease, outline-color .15s ease;
 }
-.lib-item:hover { outline: 1px solid var(--accent); }
+.lib-item:hover { outline: 1px solid var(--accent); transform: translateX(-2px); }
 .lib-item .t { font-size: 12.5px; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lib-item .u { font-size: 10.5px; color: var(--muted); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .lib-empty { font-size: 12px; color: var(--muted); padding: 6px 2px; }
@@ -111,12 +140,45 @@ body {
 #closet-close { border: none; background: none; color: var(--text); font-size: 18px; cursor: pointer; }
 #theme-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
 .theme-card {
+  position: relative; overflow: hidden;
   border: 2px solid var(--border); border-radius: var(--radius); padding: 10px;
   cursor: pointer; background: var(--surface-alt);
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--border) 35%, transparent);
+  transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
-.theme-card.current { border-color: var(--accent); }
+.theme-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent2);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--border) 60%, transparent);
+}
+.theme-card:active { transform: translateY(-1px) scale(.98); }
+.theme-card.current {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 8px 20px color-mix(in srgb, var(--border) 55%, transparent);
+}
+.theme-card.current::after {
+  content: "✓ 使用中"; position: absolute; top: 8px; right: 8px; z-index: 1;
+  background: var(--accent); color: #221607; font-size: 10px; font-weight: 700;
+  padding: 2px 8px; border-radius: 999px; box-shadow: 0 2px 8px rgba(0,0,0,.3);
+}
+.theme-card .thumb {
+  display: block; width: 100%; height: 64px; object-fit: cover;
+  border-radius: calc(var(--radius) - 5px); margin-bottom: 8px;
+  border: 1px solid color-mix(in srgb, var(--border) 70%, transparent);
+}
 .theme-card .swatches { display: flex; gap: 4px; margin-bottom: 8px; }
 .theme-card .swatches i { width: 18px; height: 18px; border-radius: 50%; display: block; border: 1px solid rgba(0,0,0,.15); }
 .theme-card h3 { font-size: 12px; margin: 0 0 4px; line-height: 1.4; }
 .theme-card p { font-size: 10.5px; margin: 0; color: var(--muted); line-height: 1.5; }
 .theme-card .badge { font-size: 10px; color: var(--accent); font-weight: 700; }
+
+/* 細めのスクロールバー (テーマ連動) */
+#closet, #library { scrollbar-width: thin; scrollbar-color: var(--accent2) transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: var(--accent2); border-radius: 999px;
+  border: 2px solid transparent; background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--accent); background-clip: padding-box; }

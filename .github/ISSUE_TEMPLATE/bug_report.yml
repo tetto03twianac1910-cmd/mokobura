@@ -1,0 +1,30 @@
+name: 🐛 不具合の報告
+description: 動かない・おかしいところを見つけたら教えてください
+title: "[不具合] "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: 何が起きましたか
+      description: 画面の様子や、どうすると起きるかを教えてください
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: 使っているOS
+      options:
+        - Windows
+        - Mac (Apple Silicon)
+        - Mac (Intel)
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: もこブラのバージョン
+      placeholder: 例：0.1.0
+    validations:
+      required: false

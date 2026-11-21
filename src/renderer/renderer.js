@@ -72,6 +72,7 @@ function renderCloset() {
     card.className = "theme-card";
     card.dataset.themeId = t.id;
     card.innerHTML =
+      `<img class="thumb" src="../themes/${t.wallpaper}" alt="" loading="lazy">` +
       '<div class="swatches">' +
       [t.colors.bg, t.colors.accent, t.colors.accent2, t.colors.surface]
         .map((col) => `<i style="background:${col}"></i>`).join("") +
@@ -129,6 +130,8 @@ async function init() {
   });
   $("#closet-open").addEventListener("click", () => { $("#closet").hidden = false; });
   $("#closet-close").addEventListener("click", () => { $("#closet").hidden = true; });
+  $("#feedback-open").addEventListener("click", () =>
+    window.mokobura.openExternal("https://github.com/tetto03twianac1910-cmd/mokobura/issues/new/choose"));
 
   const ntSearch = () => {
     const q = $("#nt-query").value.trim();
