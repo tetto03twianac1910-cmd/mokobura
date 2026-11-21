@@ -1,1 +1,50 @@
-{"build":{"appId":"app.mokobura.browser","directories":{"output":"dist"},"files":["src/**/*","package.json"],"linux":{"category":"Network","target":["AppImage","tar.gz"]},"mac":{"category":"public.app-category.productivity","target":["dmg","zip"]},"productName":"もこブラ","win":{"target":["nsis","portable"]}},"description":"着せ替えできる可愛いブラウザ (PC無料版) — Electron + Chromium","devDependencies":{"electron":"^33.0.0","electron-builder":"^25.1.8"},"main":"src/main.js","name":"mokobura-pc","private":true,"scripts":{"check":"node --check src/main.js && node --check src/preload.js && node --check src/renderer/renderer.js && node --check src/themes/themes.js","dist":"electron-builder","dist:linux":"electron-builder --linux","dist:mac":"electron-builder --mac","dist:win":"electron-builder --win","start":"electron ."},"version":"0.1.1"}
+{
+  "build": {
+    "appId": "app.mokobura.browser",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "linux": {
+      "category": "Network",
+      "target": [
+        "AppImage",
+        "tar.gz"
+      ]
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": [
+        "dmg",
+        "zip"
+      ]
+    },
+    "productName": "もこブラ",
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    }
+  },
+  "description": "着せ替えできる可愛いブラウザ (PC無料版) — Electron + Chromium",
+  "devDependencies": {
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "main": "src/main.js",
+  "name": "mokobura-pc",
+  "private": true,
+  "scripts": {
+    "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer/renderer.js && node --check src/themes/themes.js",
+    "dist": "electron-builder",
+    "dist:linux": "electron-builder --linux",
+    "dist:mac": "electron-builder --mac",
+    "dist:win": "electron-builder --win",
+    "start": "electron ."
+  },
+  "version": "0.1.2"
+}
